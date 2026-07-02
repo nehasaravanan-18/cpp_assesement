@@ -1,7 +1,4 @@
-#include <stdio.h>
-#include <string.h>
-#include <vector>
-#include <cstring>
+#include <bits/stdc++.h>
 
 using namespace std;
 
@@ -48,7 +45,7 @@ public:
 
 
 
-//sale cls....ipo only ids can stored later during deserialize actual references will stored
+//sale cls...
 class sale
 {
 public:
@@ -82,7 +79,7 @@ public:
     employeenode* left;
     employeenode* right;
 
-    //constr with parameter   emp-new node store employe in its data member
+    //constr with parameter   
     employeenode(employee emp)  
     {
         data = emp;
@@ -243,7 +240,7 @@ public:
 
 
 
-    //count emplys...nxt implement of countnodes and serializenodes
+    //count emplys...
     int countnodes(employeenode* node)
     {
         if(node == NULL)
@@ -560,7 +557,7 @@ class Serializer
 
 public:
     vector<char> bytes;     //acts as a bytes buffer
-    //add any objs into byte stream
+   
     void addbytes(void* data, int size)
     {
         char* ptr = (char*)data;
@@ -837,7 +834,7 @@ public:
 /*
 Search Employee Report
 
-Displays:
+it can Display:
 
 1. Employee Details
 2. All Sales
@@ -947,7 +944,7 @@ void searchEmpreport(employeetree& employeeTree,customertree& customerTree,salet
     printf("Total amount : %.2f\n", totalamount);
 
 
-    printf("\n===customer wise summary===");
+    printf("\n===customer wise summary===\n");
 
     for (int i = 0; i < summarycount; i++)
     {
@@ -1062,7 +1059,7 @@ void addsale(saletree&saleTree, employeetree&employeeTree, customertree& custome
 
     saleTree.add(salee);
 
-    printf("sale added");
+    printf("\nsale added\n");
 
 }
 
@@ -1076,15 +1073,9 @@ void addsale(saletree&saleTree, employeetree&employeeTree, customertree& custome
     
 /*
 
-serialize objects   -   serialize()
-write serialized data to data.bin - writefile()
-read data.bin       -   loadfile()
-deserialize objects -   deserialze()
-
-
 1
-insert sample records
-verify binary trees work correctly
+crete bst's
+insertion
 
 2
 employe bst, cust bst, sale bst
@@ -1092,26 +1083,20 @@ add emp,cust,sale
 search emp,cust
 duplicate id check
 emp validation in sales , cust vali in sales
-menu 
+
 
 3
-(Counting the number of nodes.
-Writing the count into Data.bin.
-Traversing the BST in inorder.
-Writing each object's data using fwrite().)
 
-vector<char> serialization buffer
+vector<char> serialization 
 Serialize Employees
 Serialize Customers
 Serialize Sales
-Single byte stream output
+
 vector<char> Return	
-Binary Tree Traversal	
-Store Counts
-destructors pending.....
 
 
-Serialization creates:
+
+
 
 EmployeeCount
 Employee Bytes
@@ -1123,8 +1108,7 @@ Sale Bytes--------->it all stored inside vector<char>
 
 
 4
-Write Serialized data to file called Data.bin
-Load file called Data.bin if present
+Data.bin
 Use binary file and not text file
 writeFile()
 loadFile()
@@ -1136,8 +1120,8 @@ Use fread()
 
 
 5
-Data.bin → Read
-Bytes → Objects
+Data.bin - Read
+Bytes - Objects
 Rebuild Employee BST
 Rebuild Customer BST
 Rebuild Sale BST
