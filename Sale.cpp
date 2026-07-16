@@ -150,6 +150,74 @@ private:
     }
 
 
+    void deletetree(EmployeeNode* node)
+    {
+        if (node == NULL)
+        
+            return;
+        
+            deletetree(node->left);
+            deletetree(node->right);
+
+            delete node;  
+            printf("\nEmployeeTRee deleted\n"); 
+    }
+
+
+    EmployeeNode* min(EmployeeNode* node)
+    {
+        while (node->left != NULL)
+        {
+            node = node->left;
+        }
+        return node;
+        
+    }
+
+    EmployeeNode* deletenode(EmployeeNode* node, int id)
+    {
+        if(node == NULL)
+            return NULL;
+
+        if(id < node->data.employeeId)
+            node->left = deletenode(node->left, id);
+
+        else if(id > node->data.employeeId)
+            node->right = deletenode(node->right, id);
+
+        else
+        {
+        
+            if (node->left == NULL && node->right == NULL)
+            {
+                delete node;
+                return NULL;
+            }
+
+          
+            if (node->left != NULL && node->right == NULL)
+            {
+                EmployeeNode* temp = node->left;
+                delete node;
+                return temp;
+            }
+            
+           
+            if (node->left == NULL && node->right != NULL)
+            {
+                EmployeeNode* temp = node->right;
+                delete node;
+                return temp;
+            }
+            
+
+            EmployeeNode* temp = min(node->right);
+            node->data = temp->data;
+            node->right = deletenode(node->right, temp->data.employeeId);
+        }
+    }    
+
+
 public:
     EmployeeTree()
     {
@@ -176,10 +244,19 @@ public:
     {
         return root;
     }
+    void removetree()
+    {
+        deletetree(root);
+        root = NULL;
+    }
+    void removenode(int employeeid)
+    {
+        root = deletenode(root, employeeid);
+    }
 };
 
 
-class CustomerTree
+class  CustomerTree
 {
 private:
 
@@ -219,6 +296,73 @@ private:
         return searchNode(node->right, id);
     }
 
+    void deletetree (CustomerNode* node)
+    {
+        if (node == NULL)
+            return;
+
+        deletetree(node->left);
+        deletetree(node->right);
+
+        delete node;
+        printf("\nCustomerTRee deleted\n");
+    }
+
+
+    CustomerNode* min(CustomerNode* node)
+    {
+        while (node->left != NULL)
+        {
+            node = node->left;
+        }
+        return node;
+        
+    }
+
+    CustomerNode* deletenode(CustomerNode* node, int id)
+    {
+        if(node == NULL)
+            return NULL;
+
+        if(id < node->data.customerId)
+            node->left = deletenode(node->left, id);
+
+        else if(id > node->data.customerId)
+            node->right = deletenode(node->right, id);
+
+        else
+        {
+           
+            if (node->left == NULL && node->right == NULL)
+            {
+                delete node;
+                return NULL;
+            }
+
+       
+            if (node->left != NULL && node->right == NULL)
+            {
+                CustomerNode* temp = node->left;
+                delete node;
+                return temp;
+            }
+            
+           
+            if (node->left == NULL && node->right != NULL)
+            {
+                CustomerNode* temp = node->right;
+                delete node;
+                return temp;
+            }
+            
+
+            CustomerNode* temp = min(node->right);
+            node->data = temp->data;
+            node->right = deletenode(node->right, temp->data.customerId);
+        }
+    }    
+
+    
     int count(CustomerNode* node)
     {
         if(node == NULL)
@@ -254,6 +398,15 @@ public:
     {
         return root;
     }
+    void removetree()
+    {
+        deletetree(root);
+        root = NULL;
+    }
+    void removenode(int customerid)
+    {
+        root = deletenode(root, customerid);
+    }
 };
 
 
@@ -287,6 +440,85 @@ private:
         inorder(node->right);
     }
 
+    
+    SaleNode* searchNode(SaleNode* node, int id)
+    {
+        if(node == NULL)
+            return NULL;
+        if(node->data.saleId == id)
+            return node;
+        if(id < node->data.saleId)
+            return searchNode(node->left, id);
+        return searchNode(node->right, id);
+    }
+
+    void deletetree (SaleNode* node)
+    {
+        if (node == NULL)
+            return;
+
+        deletetree(node->left);
+        deletetree(node->right);
+
+        delete node;
+        printf("\nSaleTRee deleted\n");
+    }
+
+
+    SaleNode* min(SaleNode* node)
+    {
+        while (node->left != NULL)
+        {
+            node = node->left;
+        }
+        return node;
+        
+    }
+
+    SaleNode* deletenode(SaleNode* node, int id)
+    {
+        if(node == NULL)
+            return NULL;
+
+        if(id < node->data.saleId)
+            node->left = deletenode(node->left, id);
+
+        else if(id > node->data.saleId)
+            node->right = deletenode(node->right, id);
+
+        else
+        {
+           
+            if (node->left == NULL && node->right == NULL)
+            {
+                delete node;
+                return NULL;
+            }
+
+       
+            if (node->left != NULL && node->right == NULL)
+            {
+                SaleNode* temp = node->left;
+                delete node;
+                return temp;
+            }
+            
+           
+            if (node->left == NULL && node->right != NULL)
+            {
+                SaleNode* temp = node->right;
+                delete node;
+                return temp;
+            }
+            
+            
+            SaleNode* temp = min(node->right);
+            node->data = temp->data;
+            node->right = deletenode(node->right, temp->data.saleId);
+        }
+    }   
+
+
     int count(SaleNode* node)
     {
         if(node == NULL)
@@ -310,6 +542,10 @@ public:
     {
         inorder(root);
     }
+    SaleNode* search(int saleid)
+    {
+        return searchNode(root, saleid);
+    }
     int getCount()
     {
         return count(root);
@@ -317,6 +553,15 @@ public:
     SaleNode* getRoot()
     {
         return root;
+    }
+    void removetree()
+    {
+        deletetree(root);
+        root = NULL;
+    }
+    void removenode(int saleid)
+    {
+        root = deletenode(root, saleid);
     }
 };
 
@@ -333,7 +578,7 @@ void addEmployee(EmployeeTree& employeeTree)
 
     if(employeeTree.search(emp.employeeId) != NULL)
     {
-        printf("\nEmployee ID already exists!\n");
+        printf("\nEmployee ID already exists\n");
         return;
     }
 
@@ -344,7 +589,7 @@ void addEmployee(EmployeeTree& employeeTree)
 
     employeeTree.add(emp);
 
-    printf("\nEmployee Added Successfully.\n");
+    printf("\nEmployee Added \n");
 }
 
 
@@ -357,7 +602,7 @@ void addCustomer(CustomerTree& customerTree)
 
     if(customerTree.search(cust.customerId) != NULL)
     {
-        printf("\nCustomer ID already exists!\n");
+        printf("\nCustomer ID already exists\n");
         return;
     }
 
@@ -368,7 +613,7 @@ void addCustomer(CustomerTree& customerTree)
 
     customerTree.add(cust);
 
-    printf("\nCustomer Added Successfully.\n");
+    printf("\nCustomer Added \n");
 }
 
 
@@ -378,13 +623,19 @@ void addSale( SaleTree& saleTree, EmployeeTree& employeeTree, CustomerTree& cust
 
     printf("\nEnter Sale ID : ");
     scanf("%d", &sale.saleId);
+    
+    if (saleTree.search(sale.saleId) != NULL)
+    {
+        printf("\nSale id already exists");
+    }
+    
     printf("Enter Employee ID : ");
     scanf("%d", &sale.employeeId);
 
     
     if(employeeTree.search(sale.employeeId) == NULL)
     {
-        printf("\nEmployee Not Found!\n");
+        printf("\nEmployee Not Found\n");
         return;
     }
 
@@ -403,43 +654,43 @@ void addSale( SaleTree& saleTree, EmployeeTree& employeeTree, CustomerTree& cust
 
     saleTree.add(sale);
 
-    printf("\nSale Added Successfully.\n");
+    printf("\nSale Added \n");
 }
 
 
 
 
 
-void saveEmployees(EmployeeNode* node, FILE* fp)
+void serializeEmp(EmployeeNode* node, FILE* fp)
 {
     if(node == NULL)
         return;
 
-    saveEmployees(node->left, fp);
+    serializeEmp(node->left, fp);
     fwrite( &(node->data), sizeof(Employee), 1, fp);                
-    saveEmployees(node->right, fp);
+    serializeEmp(node->right, fp);
 }
 
 
-void saveCustomers(CustomerNode* node, FILE* fp)
+void serializeCust(CustomerNode* node, FILE* fp)
 {
     if(node == NULL)
         return;
 
-    saveCustomers(node->left, fp);
+    serializeCust(node->left, fp);
     fwrite( &(node->data), sizeof(Customer), 1, fp);                  
-    saveCustomers(node->right, fp);
+    serializeCust(node->right, fp);
 }
 
 
-void saveSales(SaleNode* node, FILE* fp)
+void serializeSales(SaleNode* node, FILE* fp)
 {
     if(node == NULL)
         return;
 
-    saveSales(node->left, fp);
+    serializeSales(node->left, fp);
     fwrite( &(node->data), sizeof(Sale), 1, fp);  
-    saveSales(node->right, fp);
+    serializeSales(node->right, fp);
 }
 
 
@@ -450,7 +701,7 @@ void saveData( EmployeeTree& employeeTree, CustomerTree& customerTree, SaleTree&
 
     if(fp == NULL)
     {
-        printf("\nError Creating File!\n");
+        printf("\nError Creating File\n");
         return;
     }
 
@@ -463,13 +714,13 @@ void saveData( EmployeeTree& employeeTree, CustomerTree& customerTree, SaleTree&
     fwrite(&customerCount, sizeof(int), 1, fp);
     fwrite(&saleCount, sizeof(int), 1, fp);
 
-    saveEmployees(employeeTree.getRoot(), fp);
-    saveCustomers(customerTree.getRoot(), fp);
-    saveSales(saleTree.getRoot(), fp);
+    serializeEmp(employeeTree.getRoot(), fp);
+    serializeCust(customerTree.getRoot(), fp);
+    serializeSales(saleTree.getRoot(), fp);
 
     fclose(fp);
 
-    printf("\nData Saved Successfully.\n");
+    printf("\nData Saved \n");
 }
 
 
@@ -477,7 +728,7 @@ void saveData( EmployeeTree& employeeTree, CustomerTree& customerTree, SaleTree&
 
 
 
-void loadEmployees(FILE* fp, EmployeeTree& employeeTree, int employeeCount)
+void deseriEmp(FILE* fp, EmployeeTree& employeeTree, int employeeCount)
 {
     Employee emp;
 
@@ -489,7 +740,7 @@ void loadEmployees(FILE* fp, EmployeeTree& employeeTree, int employeeCount)
 }
 
 
-void loadCustomers(FILE* fp, CustomerTree& customerTree, int customerCount)
+void deseriCust(FILE* fp, CustomerTree& customerTree, int customerCount)
 {
     Customer cust;
 
@@ -501,7 +752,7 @@ void loadCustomers(FILE* fp, CustomerTree& customerTree, int customerCount)
 }
 
 
-void loadSales(FILE* fp, SaleTree& saleTree, int saleCount)
+void deseriSales(FILE* fp, SaleTree& saleTree, int saleCount)
 {
     Sale sale;
 
@@ -531,17 +782,68 @@ void loadData( EmployeeTree& employeeTree, CustomerTree& customerTree, SaleTree&
     fread(&customerCount, sizeof(int), 1, fp);
     fread( &saleCount, sizeof(int), 1, fp);
 
-    loadEmployees( fp, employeeTree, employeeCount);
-    loadCustomers(fp, customerTree, customerCount);
-    loadSales(fp, saleTree, saleCount);
+    deseriEmp( fp, employeeTree, employeeCount);
+    deseriCust(fp, customerTree, customerCount);
+    deseriSales(fp, saleTree, saleCount);
 
     fclose(fp);
 
-    printf("\nData Loaded Successfully.\n");
+    printf("\nData Loaded \n");
 }
 
 
 
+void deleteEmp(EmployeeTree& employeeTree)
+{
+    int employeeid;
+
+    printf("\nEner id to delete: ");
+    scanf("%d", &employeeid);
+
+    if (employeeTree.search(employeeid) == NULL)
+    {
+        printf("\nEmployee not found\n");
+        return;
+    }
+
+    employeeTree.removenode(employeeid);
+    printf("\nEmployee deleted\n");  
+}
+
+void deleteCust(CustomerTree& customerTree)
+{
+    int customerid;
+
+    printf("\nEnter id to delete: ");
+    scanf("%d", &customerid);
+
+    if (customerTree.search(customerid) == NULL)
+    {
+        printf("\ncustomer not found\n");
+        return;
+    }
+
+    customerTree.removenode(customerid);
+    printf("\nCustomer deleted\n");
+}
+
+void deleteSale(SaleTree& saleTree)
+{
+    int saleid;
+
+    printf("\nEnter id to delete: ");
+    scanf("%d", &saleid);
+
+    if (saleTree.search(saleid) == NULL)
+    {
+        printf("\nsale not found\n");
+        return;
+    }
+
+    saleTree.removenode(saleid);
+    printf("\nSale deleted\n");
+    
+}
 
 
 class CustomerSummary
@@ -679,7 +981,13 @@ int main()
         printf("\n6. Display Sales");
         printf("\n7. Employee Report");
         printf("\n8. Save Database");
-        printf("\n9. Exit");
+        printf("\n9. Delete empTree");
+        printf("\n10. Delete custTree");
+        printf("\n11. Delete SaleTree");
+        printf("\n12. Delete employee");
+        printf("\n13. Delete Customer");
+        printf("\n14. Delete sales");
+        printf("\n15. Exit");
         printf("\n----------------------------");
         printf("\nEnter Your Choice : ");
         scanf("%d", &choice);
@@ -721,14 +1029,35 @@ int main()
             break;
 
         case 9:
+            employeeTree.removetree();         
+            break;
+
+        case 10:
+            customerTree.removetree();
+            break;
+
+        case 11:
+            saleTree.removetree();
+            break;
+
+        case 12:
+            deleteEmp(employeeTree);
+            break;
+          
+        case 13:
+            deleteCust(customerTree);
+            break;
+
+        case 14:
+            deleteSale(saleTree);
+            break;
+
+        case 15:
             saveData(employeeTree, customerTree, saleTree);
-
-            printf("\nThank You!\n\n");
-
+            printf("\nProgram exit\n\n");
             return false;
 
         default:
-
             printf("\nInvalid Choice!\n");
         }
     }
