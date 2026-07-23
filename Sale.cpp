@@ -395,7 +395,7 @@ public:
         root = deletenode(root, customerid);
     }
 };
-//customer deleted
+
 
 class SaleTree
 {
