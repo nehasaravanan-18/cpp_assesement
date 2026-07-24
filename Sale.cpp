@@ -123,10 +123,9 @@ private:
             return;
 
         inorder(node->left);
-
-        cout<<"\nEmployee ID : %d", node->data.employeeId;
-        cout<<"\nName        : %s", node->data.name;
-        cout<<"\nSalary      : %f\n", node->data.salary;
+        cout<<"\nEmployee ID : ", node->data.employeeId;
+        cout<<"\nName        : ", node->data.name;
+        cout<<"\nSalary      : ", node->data.salary;
         inorder(node->right);
     }
 
@@ -137,16 +136,17 @@ private:
 
         if(node->data.employeeId == id)
             return node;
-        if(id < node->data.employeeId)
-            return searchNode(node->left, id);
-        return searchNode(node->right, id);
+        else if(id < node->data.employeeId)        
+            return searchNode(node->left, id);        
+        else 
+            return searchNode(node->right, id);        
     }
 
     int count(EmployeeNode* node)
     {
         if(node == NULL)
             return 0;
-
+        
         return 1 + count(node->left) + count(node->right);
     }
 
@@ -164,44 +164,35 @@ private:
     {
         if(node == NULL)
             return NULL;
-
         if(id < node->data.employeeId)
             node->left = deletenode(node->left, id);
-
         else if(id > node->data.employeeId)
             node->right = deletenode(node->right, id);
-
-        else
+        else if(id == node->data.employeeId)
         {
-        
             if (node->left == NULL && node->right == NULL)
             {
                 delete node;
                 return NULL;
             }
-
-          
             if (node->left != NULL && node->right == NULL)
             {
                 EmployeeNode* temp = node->left;
                 delete node;
                 return temp;
-            }
-            
-           
+            }            
             if (node->left == NULL && node->right != NULL)
             {
                 EmployeeNode* temp = node->right;
                 delete node;
                 return temp;
-            }
-            
+            }            
 
             EmployeeNode* temp = min(node->right);
             node->data = temp->data;
             node->right = deletenode(node->right, temp->data.employeeId);
         }
-        return root;
+        return node;
     }    
 
 
@@ -283,9 +274,9 @@ private:
             return;
 
         inorder(node->left);
-        cout<<"\nCustomer ID : %d", node->data.customerId;
-        cout<<"\nName        : %s", node->data.name;
-        cout<<"\nAddress     : %s\n", node->data.address;
+        cout<<"\nCustomer ID : ", node->data.customerId;
+        cout<<"\nName        : ", node->data.name;
+        cout<<"\nAddress     : ", node->data.address;
         inorder(node->right);
     }
 
@@ -420,10 +411,10 @@ private:
             return;
 
         inorder(node->left);
-        cout<<"\nSale ID     : %d", node->data.saleId;
-        cout<<"\nEmployee ID : %d", node->data.employeeId;
-        cout<<"\nCustomer ID : %d", node->data.customerId;
-        cout<<"\nAmount      : %f", node->data.amount;
+        cout<<"\nSale ID     : ", node->data.saleId;
+        cout<<"\nEmployee ID : ", node->data.employeeId;
+        cout<<"\nCustomer ID : ", node->data.customerId;
+        cout<<"\nAmount      : ", node->data.amount;
         inorder(node->right);
     }
 
@@ -979,9 +970,9 @@ void displayEmployeeSales( SaleNode* node, int employeeId, CustomerTree& custome
     if(node->data.employeeId == employeeId)
     {
         cout<<"\n------------------------";
-        cout<<"\nSale ID     : %d", node->data.saleId;
-        cout<<"\nCustomer ID : %d", node->data.customerId;
-        cout<<"\nAmount      : %f", node->data.amount;
+        cout<<"\nSale ID     : ", node->data.saleId;
+        cout<<"\nCustomer ID : ", node->data.customerId;
+        cout<<"\nAmount      : ", node->data.amount;
 
         bool found = false;
 
@@ -1036,9 +1027,9 @@ void employeeReport(EmployeeTree& employeeTree, CustomerTree& customerTree, Sale
     cout<<"\nEmployee Details";
     cout<<"\n-----------------";
 
-    cout<<"\nEmployee ID : %d", emp->data.employeeId;
-    cout<<"\nName        : %s", emp->data.name;
-    cout<<"\nSalary      : %f", emp->data.salary;
+    cout<<"\nEmployee ID : ", emp->data.employeeId;
+    cout<<"\nName        : ", emp->data.name;
+    cout<<"\nSalary      : ", emp->data.salary;
 
     CustomerSummary summary[100];
 
@@ -1050,10 +1041,10 @@ void employeeReport(EmployeeTree& employeeTree, CustomerTree& customerTree, Sale
     cout<<"\n\n------- CUSTOMER SUMMARY -------\n";
     for(int i = 0; i < summaryCount; i++)
     {
-        cout<<"\nCustomer ID   : %d", summary[i].customerId;
-        cout<<"\nCustomer Name : %s", summary[i].customerName;
-        cout<<"\nSales Count   : %d", summary[i].saleCount;
-        cout<<"\nTotal Amount  : %f", summary[i].totalAmount;
+        cout<<"\nCustomer ID   : ", summary[i].customerId;
+        cout<<"\nCustomer Name : ", summary[i].customerName;
+        cout<<"\nSales Count   : ", summary[i].saleCount;
+        cout<<"\nTotal Amount  : ", summary[i].totalAmount;
         cout<<"\n-----------------------";
     }
 }
