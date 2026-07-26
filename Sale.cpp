@@ -14,7 +14,7 @@ public:
     {
         employeeId = 0;
         salary = 0;
-        strcpy(name, "");
+        (name, "");
     }
 };
 
@@ -29,8 +29,8 @@ public:
     Customer()
     {
         customerId = 0;
-        strcpy(name, "");
-        strcpy(address, "");
+        (name, "");
+        (address, "");
     }
 };                          
                                                      
@@ -56,11 +56,11 @@ public:
 class EmployeeNode
 {
 public:
-    Employee data;
+    Employee* data;
     EmployeeNode* left;
     EmployeeNode* right;
 
-    EmployeeNode(Employee emp)
+    EmployeeNode(Employee* emp)
     {
         data = emp;
         left = NULL;
@@ -72,11 +72,11 @@ public:
 class CustomerNode
 {
 public:
-    Customer data;
+    Customer* data;
     CustomerNode* left;
     CustomerNode* right;
 
-    CustomerNode(Customer cust)
+    CustomerNode(Customer* cust)
     {
         data = cust;
         left = NULL;
@@ -88,11 +88,11 @@ public:
 class SaleNode
 {
 public:
-    Sale data;
+    Sale* data;
     SaleNode* left;
     SaleNode* right;
 
-    SaleNode(Sale sale)
+    SaleNode(Sale* sale)
     {
         data = sale;
         left = NULL;
@@ -106,13 +106,13 @@ class EmployeeTree
 private:
     EmployeeNode* root;
 
-    EmployeeNode* insert(EmployeeNode* node, Employee emp)
+    EmployeeNode* insert(EmployeeNode* node, Employee* emp)
     {                              
         if(node == NULL)
             return new EmployeeNode(emp);
-        if(emp.employeeId < node->data.employeeId)
+        if(emp->employeeId < node->data->employeeId)
             node->left = insert(node->left, emp);
-        else if(emp.employeeId > node->data.employeeId)
+        else if(emp->employeeId > node->data->employeeId)
             node->right = insert(node->right, emp);
         return node;
     }
@@ -123,9 +123,9 @@ private:
             return;
 
         inorder(node->left);
-        cout<<"\nEmployee ID : ", node->data.employeeId;
-        cout<<"\nName        : ", node->data.name;
-        cout<<"\nSalary      : ", node->data.salary;
+        cout<<"\nEmployee ID : ", node->data->employeeId;
+        cout<<"\nName        : ", node->data->name;
+        cout<<"\nSalary      : ", node->data->salary;
         inorder(node->right);
     }
 
@@ -134,9 +134,9 @@ private:
         if(node == NULL)
             return NULL;
 
-        if(node->data.employeeId == id)
+        if(node->data->employeeId == id)
             return node;
-        else if(id < node->data.employeeId)        
+        else if(id < node->data->employeeId)        
             return searchNode(node->left, id);        
         else 
             return searchNode(node->right, id);        
@@ -164,11 +164,11 @@ private:
     {
         if(node == NULL)
             return NULL;
-        if(id < node->data.employeeId)
+        if(id < node->data->employeeId)
             node->left = deletenode(node->left, id);
-        else if(id > node->data.employeeId)
+        else if(id > node->data->employeeId)
             node->right = deletenode(node->right, id);
-        else if(id == node->data.employeeId)
+        else if(id == node->data->employeeId)
         {
             if (node->left == NULL && node->right == NULL)
             {
@@ -190,18 +190,18 @@ private:
 
             EmployeeNode* temp = min(node->right);
             node->data = temp->data;
-            node->right = deletenode(node->right, temp->data.employeeId);
+            node->right = deletenode(node->right, temp->data->employeeId);
         }
         return node;
     }    
-
+    
 
     EmployeeNode* searchbyname(EmployeeNode* node,char name[])
     {
     if (node == NULL)
         return NULL;
 
-    if(strcmp(node->data.name, name )== 0)
+    if(strcmp(node->data->name, name )== 0)
         return node;
 
     EmployeeNode* temp = searchbyname(node->left, name);
@@ -219,7 +219,7 @@ public:
         root = NULL;
     }
 
-    void add(Employee emp)
+    void add(Employee* emp)
     {
         root = insert(root, emp);
     }
@@ -257,13 +257,13 @@ private:
 
     CustomerNode* root;
 
-    CustomerNode* insert(CustomerNode* node, Customer cust)
+    CustomerNode* insert(CustomerNode* node, Customer* cust)
     {
         if(node == NULL)
             return new CustomerNode(cust);
-        if(cust.customerId < node->data.customerId)
+        if(cust->customerId < node->data->customerId)
             node->left = insert(node->left, cust);
-        else if(cust.customerId > node->data.customerId)
+        else if(cust->customerId > node->data->customerId)
             node->right = insert(node->right, cust);
         return node;
     }
@@ -274,9 +274,9 @@ private:
             return;
 
         inorder(node->left);
-        cout<<"\nCustomer ID : ", node->data.customerId;
-        cout<<"\nName        : ", node->data.name;
-        cout<<"\nAddress     : ", node->data.address;
+        cout<<"\nCustomer ID : ", node->data->customerId;
+        cout<<"\nName        : ", node->data->name;
+        cout<<"\nAddress     : ", node->data->address;
         inorder(node->right);
     }
 
@@ -284,9 +284,9 @@ private:
     {
         if(node == NULL)
             return NULL;
-        if(node->data.customerId == id)
+        if(node->data->customerId == id)
             return node;
-        if(id < node->data.customerId)
+        if(id < node->data->customerId)
             return searchNode(node->left, id);
         return searchNode(node->right, id);
     }
@@ -306,10 +306,10 @@ private:
         if(node == NULL)
             return NULL;
 
-        if(id < node->data.customerId)
+        if(id < node->data->customerId)
             node->left = deletenode(node->left, id);
 
-        else if(id > node->data.customerId)
+        else if(id > node->data->customerId)
             node->right = deletenode(node->right, id);
 
         else
@@ -340,7 +340,7 @@ private:
 
             CustomerNode* temp = min(node->right);
             node->data = temp->data;
-            node->right = deletenode(node->right, temp->data.customerId);
+            node->right = deletenode(node->right, temp->data->customerId);
         }
         return root;
     }    
@@ -361,7 +361,7 @@ public:
         root = NULL;
     }
 
-    void add(Customer cust)
+    void add(Customer*cust)
     {
         root = insert(root, cust);
     }
@@ -394,13 +394,13 @@ private:
 
     SaleNode* root;
 
-    SaleNode* insert(SaleNode* node, Sale sale)
+    SaleNode* insert(SaleNode* node, Sale* sale)
     {
         if(node == NULL)
             return new SaleNode(sale);
-        if(sale.saleId < node->data.saleId)
+        if(sale->saleId < node->data->saleId)
             node->left = insert(node->left, sale);
-        else if(sale.saleId > node->data.saleId)
+        else if(sale->saleId > node->data->saleId)
             node->right = insert(node->right, sale);
         return node;
     }
@@ -411,10 +411,10 @@ private:
             return;
 
         inorder(node->left);
-        cout<<"\nSale ID     : ", node->data.saleId;
-        cout<<"\nEmployee ID : ", node->data.employeeId;
-        cout<<"\nCustomer ID : ", node->data.customerId;
-        cout<<"\nAmount      : ", node->data.amount;
+        cout<<"\nSale ID     : ", node->data->saleId;
+        cout<<"\nEmployee ID : ", node->data->employeeId;
+        cout<<"\nCustomer ID : ", node->data->customerId;
+        cout<<"\nAmount      : ", node->data->amount;
         inorder(node->right);
     }
 
@@ -423,9 +423,9 @@ private:
     {
         if(node == NULL)
             return NULL;
-        if(node->data.saleId == id)
+        if(node->data->saleId == id)
             return node;
-        if(id < node->data.saleId)
+        if(id < node->data->saleId)
             return searchNode(node->left, id);
         return searchNode(node->right, id);
     }
@@ -446,10 +446,10 @@ private:
         if(node == NULL)
             return NULL;
 
-        if(id < node->data.saleId)
+        if(id < node->data->saleId)
             node->left = deletenode(node->left, id);
 
-        else if(id > node->data.saleId)
+        else if(id > node->data->saleId)
             node->right = deletenode(node->right, id);
 
         else
@@ -475,12 +475,11 @@ private:
                 SaleNode* temp = node->right;
                 delete node;
                 return temp;
-            }
-            
+            }           
             
             SaleNode* temp = min(node->right);
             node->data = temp->data;
-            node->right = deletenode(node->right, temp->data.saleId);
+            node->right = deletenode(node->right, temp->data->saleId);
         }
         return root;
     }   
@@ -501,7 +500,7 @@ public:
         root = NULL;
     }
 
-    void add(Sale sale)
+    void add(Sale* sale)
     {
         root = insert(root, sale);
     }
@@ -533,12 +532,12 @@ public:
 
 void addEmployee(EmployeeTree& employeeTree)
 {
-    Employee emp;
+    Employee* emp = new Employee;
 
     while (true)
     {
     cout<<"\nEnter Employee ID : ";
-    cin>>emp.employeeId;
+    cin>>emp->employeeId;
     if (cin.fail())
     {
         cout<<"Invalid input. enter only numbers \n";
@@ -551,7 +550,7 @@ void addEmployee(EmployeeTree& employeeTree)
     }
     }
 
-    if(employeeTree.search(emp.employeeId) != NULL)
+    if(employeeTree.search(emp->employeeId) != NULL)
     {
         cout<<"\nEmployee ID already exists\n";
         return;
@@ -559,12 +558,12 @@ void addEmployee(EmployeeTree& employeeTree)
 
     cout<<"Enter Employee Name : ";
     cin.ignore();
-    cin.getline(emp.name, 50);
+    cin.getline(emp->name, 50);
 
     while (true)
     {
     cout<<"Enter Salary : ";                                          
-    cin>>emp.salary;
+    cin>>emp->salary;
     if (cin.fail())
     {
         cout<<"invalid salary.enter only nums \n";
@@ -585,12 +584,12 @@ void addEmployee(EmployeeTree& employeeTree)
 
 void addCustomer(CustomerTree& customerTree)
 {
-    Customer cust;
+    Customer* cust = new Customer;
     while (true)
     {
 
     cout<<"\nEnter Customer ID : ";
-    cin>>cust.customerId;
+    cin>>cust->customerId;
         if (cin.fail())
         {
             cout<<"invalid.enter only nums\n";
@@ -603,20 +602,18 @@ void addCustomer(CustomerTree& customerTree)
         }
         
     }
-    if(customerTree.search(cust.customerId) != NULL)
+    if(customerTree.search(cust->customerId) != NULL)
     {
         cout<<"\nCustomer ID already exists\n";
         return;
     }
 
     cout<<"Enter Customer Name : ";
-    cin>>cust.name;
     cin.ignore();
-    cin.getline(cust.name, 50);
+    cin.getline(cust->name, 50);
     cout<<"Enter Customer Address : ";
-    cin>>cust.address;
     cin.ignore();
-    cin.getline(cust.address, 100);
+    cin.getline(cust->address, 100);
 
     customerTree.add(cust);
 
@@ -626,12 +623,12 @@ void addCustomer(CustomerTree& customerTree)
 
 void addSale( SaleTree& saleTree, EmployeeTree& employeeTree, CustomerTree& customerTree)
 {
-    Sale sale;
+    Sale* sale = new Sale;
     while (true)
     {
        
     cout<<"\nEnter Sale ID : ";
-    cin>>sale.saleId;
+    cin>>sale->saleId;
     if (cin.fail())
     {
         cout<<"invalid. enter only nums";
@@ -642,11 +639,11 @@ void addSale( SaleTree& saleTree, EmployeeTree& employeeTree, CustomerTree& cust
         break;
     }
 
-    while (saleTree.search(sale.saleId) != NULL)
+    while (saleTree.search(sale->saleId) != NULL)
     {
         cout<<"\nSale isid already exists\n";
         cout<<"\nEnter Sale ID : ";
-        cin>>sale.saleId;
+        cin>>sale->saleId;
 
     }
     
@@ -654,7 +651,7 @@ void addSale( SaleTree& saleTree, EmployeeTree& employeeTree, CustomerTree& cust
     {
        
     cout<<"Enter Employee ID : ";
-    cin>>sale.employeeId;
+    cin>>sale->employeeId;
     if (cin.fail())
     {
         cout<<"invalid. enter only nums";
@@ -667,7 +664,7 @@ void addSale( SaleTree& saleTree, EmployeeTree& employeeTree, CustomerTree& cust
 }   
 
     
-    if(employeeTree.search(sale.employeeId) == NULL)
+    if(employeeTree.search(sale->employeeId) == NULL)
     {
         cout<<"\nEmployee Not Found\n";
         return;
@@ -677,7 +674,7 @@ void addSale( SaleTree& saleTree, EmployeeTree& employeeTree, CustomerTree& cust
     {
 
     cout<<"Enter Customer ID : ";
-    cin>>sale.customerId;
+    cin>>sale->customerId;
     if (cin.fail())
     {
         cout<<"invalid. enter nums only";
@@ -688,7 +685,7 @@ void addSale( SaleTree& saleTree, EmployeeTree& employeeTree, CustomerTree& cust
         break;
     }
   
-    if(customerTree.search(sale.customerId) == NULL)
+    if(customerTree.search(sale->customerId) == NULL)
     {
         cout<<"\nCustomer Not Found!\n";
         return;
@@ -698,7 +695,7 @@ void addSale( SaleTree& saleTree, EmployeeTree& employeeTree, CustomerTree& cust
     {
         
     cout<<"Enter Sale Amount: ";
-    cin>>sale.amount;
+    cin>>sale->amount;
     if (cin.fail())
     {
         cout<<"invalid. enter only nums";
@@ -813,7 +810,7 @@ void serializeEmp(EmployeeNode* node, FILE* fp)
         return;
 
     serializeEmp(node->left, fp);
-    fwrite( &(node->data), sizeof(Employee), 1, fp);                
+    fwrite( (node->data), sizeof(Employee), 1, fp);                
     serializeEmp(node->right, fp);
 }
 
@@ -824,7 +821,7 @@ void serializeCust(CustomerNode* node, FILE* fp)
         return;
 
     serializeCust(node->left, fp);
-    fwrite( &(node->data), sizeof(Customer), 1, fp);                  
+    fwrite( (node->data), sizeof(Customer), 1, fp);                  
     serializeCust(node->right, fp);
 }
 
@@ -835,7 +832,7 @@ void serializeSales(SaleNode* node, FILE* fp)
         return;
 
     serializeSales(node->left, fp);
-    fwrite( &(node->data), sizeof(Sale), 1, fp);  
+    fwrite( (node->data), sizeof(Sale), 1, fp);  
     serializeSales(node->right, fp);
 }
 
@@ -875,11 +872,11 @@ void saveData( EmployeeTree& employeeTree, CustomerTree& customerTree, SaleTree&
 
 void deseriEmp(FILE* fp, EmployeeTree& employeeTree, int employeeCount)
 {
-    Employee emp;
+    Employee* emp = new Employee;
 
     for(int i = 0; i < employeeCount; i++)
     {
-        fread(&emp, sizeof(Employee), 1, fp);
+        fread(emp, sizeof(Employee), 1, fp);
         employeeTree.add(emp);
     }
 }
@@ -887,11 +884,11 @@ void deseriEmp(FILE* fp, EmployeeTree& employeeTree, int employeeCount)
 
 void deseriCust(FILE* fp, CustomerTree& customerTree, int customerCount)
 {
-    Customer cust;
+    Customer* cust = new Customer;
 
     for(int i = 0; i < customerCount; i++)
     {
-        fread( &cust, sizeof(Customer), 1, fp);
+        fread( cust, sizeof(Customer), 1, fp);
         customerTree.add(cust);
     }
 }
@@ -899,11 +896,11 @@ void deseriCust(FILE* fp, CustomerTree& customerTree, int customerCount)
 
 void deseriSales(FILE* fp, SaleTree& saleTree, int saleCount)
 {
-    Sale sale;
+    Sale* sale = new Sale;
 
     for(int i = 0; i < saleCount; i++)
     {
-        fread( &sale, sizeof(Sale), 1, fp);
+        fread(sale, sizeof(Sale), 1, fp);
         saleTree.add(sale);
     }
 }
@@ -953,7 +950,7 @@ public:
         customerId = 0;
         saleCount = 0;
         totalAmount = 0;
-        strcpy(customerName, "");
+        (customerName, "");
     }
 };
 
@@ -967,18 +964,18 @@ void displayEmployeeSales( SaleNode* node, int employeeId, CustomerTree& custome
 
     displayEmployeeSales( node->left, employeeId, customerTree, summary, summaryCount);
 
-    if(node->data.employeeId == employeeId)
+    if(node->data->employeeId == employeeId)
     {
         cout<<"\n------------------------";
-        cout<<"\nSale ID     : ", node->data.saleId;
-        cout<<"\nCustomer ID : ", node->data.customerId;
-        cout<<"\nAmount      : ", node->data.amount;
+        cout<<"\nSale ID     : ", node->data->saleId;
+        cout<<"\nCustomer ID : ", node->data->customerId;
+        cout<<"\nAmount      : ", node->data->amount;
 
         bool found = false;
 
         for(int i = 0; i < summaryCount; i++)
         {
-            if(summary[i].customerId == node->data.customerId)
+            if(summary[i].customerId == node->data->customerId)
             {
                 found = true;
                 break;
@@ -987,16 +984,16 @@ void displayEmployeeSales( SaleNode* node, int employeeId, CustomerTree& custome
 
         if(!found)
         {
-            summary[summaryCount].customerId = node->data.customerId;
-            CustomerNode* cust = customerTree.search( node->data.customerId );
+            summary[summaryCount].customerId = node->data->customerId;
+            CustomerNode* cust = customerTree.search( node->data->customerId );
 
             if(cust != NULL)
             {
-                strcpy( summary[summaryCount].customerName, cust->data.name);
+                ( summary[summaryCount].customerName, cust->data->name);
             }
 
             summary[summaryCount].saleCount = 1;
-            summary[summaryCount].totalAmount = node->data.amount;
+            summary[summaryCount].totalAmount = node->data->amount;
             summaryCount++;
         }
     }           
@@ -1022,14 +1019,14 @@ void employeeReport(EmployeeTree& employeeTree, CustomerTree& customerTree, Sale
         cout<<"\nEmployee Not Found!\n";
         return;
     }
-    int employeeId = emp->data.employeeId;
+    int employeeId = emp->data->employeeId;
 
     cout<<"\nEmployee Details";
     cout<<"\n-----------------";
 
-    cout<<"\nEmployee ID : ", emp->data.employeeId;
-    cout<<"\nName        : ", emp->data.name;
-    cout<<"\nSalary      : ", emp->data.salary;
+    cout<<"\nEmployee ID : ", emp->data->employeeId;
+    cout<<"\nName        : ", emp->data->name;
+    cout<<"\nSalary      : ", emp->data->salary;
 
     CustomerSummary summary[100];
 
