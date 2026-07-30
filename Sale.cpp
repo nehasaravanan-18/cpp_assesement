@@ -14,7 +14,7 @@ public:
     {
         employeeId = 0;
         salary = 0;
-        (name, "");
+        strcpy(name, " ");
     }
 };
 
@@ -27,10 +27,10 @@ public:
     char address[100];
 
     Customer()
-    {
+    { 
         customerId = 0;
-        (name, "");
-        (address, "");
+        strcpy(name, "");
+        strcpy(address, "");
     }
 };                          
                                                      
@@ -42,7 +42,7 @@ public:
     int employeeId;
     int customerId;
     float amount;
-
+    
     Sale()
     {
         saleId = 0;
@@ -60,7 +60,7 @@ public:
     EmployeeNode* left;
     EmployeeNode* right;
 
-    EmployeeNode(Employee* emp)
+    EmployeeNode(Employee*emp)
     {
         data = emp;
         left = NULL;
@@ -76,7 +76,7 @@ public:
     CustomerNode* left;
     CustomerNode* right;
 
-    CustomerNode(Customer* cust)
+    CustomerNode(Customer*cust)
     {
         data = cust;
         left = NULL;
@@ -92,7 +92,7 @@ public:
     SaleNode* left;
     SaleNode* right;
 
-    SaleNode(Sale* sale)
+    SaleNode(Sale*sale)
     {
         data = sale;
         left = NULL;
@@ -159,7 +159,6 @@ private:
         }
         return node;     
     }
-
     EmployeeNode* deletenode(EmployeeNode* node, int id)
     {
         if(node == NULL)
@@ -187,7 +186,6 @@ private:
                 delete node;
                 return temp;
             }            
-
             EmployeeNode* temp = min(node->right);
             node->data = temp->data;
             node->right = deletenode(node->right, temp->data->employeeId);
@@ -201,7 +199,18 @@ private:
     if (node == NULL)
         return NULL;
 
-    if(strcmp(node->data->name, name )== 0)
+    bool same = true;
+    int i = 0;
+    while (node->data->name[i] != '\0' || name[i] != '\0')
+    {
+        if (node->data->name[i] != name[i])
+        {
+            same = false;
+            break;
+        }
+        i++;   
+    }
+    if(same)
         return node;
 
     EmployeeNode* temp = searchbyname(node->left, name);
@@ -218,7 +227,6 @@ public:
     {
         root = NULL;
     }
-
     void add(Employee* emp)
     {
         root = insert(root, emp);
@@ -587,7 +595,6 @@ void addCustomer(CustomerTree& customerTree)
     Customer* cust = new Customer;
     while (true)
     {
-
     cout<<"\nEnter Customer ID : ";
     cin>>cust->customerId;
         if (cin.fail())
@@ -599,8 +606,7 @@ void addCustomer(CustomerTree& customerTree)
         else
         {
             break;
-        }
-        
+        }       
     }
     if(customerTree.search(cust->customerId) != NULL)
     {
@@ -810,7 +816,7 @@ void serializeEmp(EmployeeNode* node, FILE* fp)
         return;
 
     serializeEmp(node->left, fp);
-    fwrite( (node->data), sizeof(Employee), 1, fp);                
+    fwrite((node->data), sizeof(Employee), 1, fp);                
     serializeEmp(node->right, fp);
 }
 
@@ -840,7 +846,7 @@ void serializeSales(SaleNode* node, FILE* fp)
 
 void saveData( EmployeeTree& employeeTree, CustomerTree& customerTree, SaleTree& saleTree)
 {
-    FILE* fp = fopen("Data.bin", "wb");
+    FILE*fp = fopen("Data.bin", "wb");
 
     if(fp == NULL)
     {
@@ -851,7 +857,6 @@ void saveData( EmployeeTree& employeeTree, CustomerTree& customerTree, SaleTree&
     int employeeCount = employeeTree.getCount();
     int customerCount = customerTree.getCount();
     int saleCount = saleTree.getCount();
-
 
     fwrite(&employeeCount, sizeof(int), 1, fp);
     fwrite(&customerCount, sizeof(int), 1, fp);
